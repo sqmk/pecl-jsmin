@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<package version="2.0" xmlns="http://pear.php.net/dtd/package-2.0" xmlns:tasks="http://pear.php.net/dtd/tasks-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0 http://pear.php.net/dtd/tasks-1.0.xsd http://pear.php.net/dtd/package-2.0 http://pear.php.net/dtd/package-2.0.xsd">
+ <name>jsmin</name>
+ <channel>pecl.php.net</channel>
+ <summary>PHP extension for minifying JavaScript</summary>
+ <description>This extension provides an API for minifying JavaScript.</description>
+ <lead>
+  <name>Michael K. Squires</name>
+  <user>sqmk</user>
+  <email>squiresmk@gmail.com</email>
+  <active>yes</active>
+ </lead>
+ <date>2012-09-16</date>
+ <time>14:10:08</time>
+ <version>
+  <release>0.1</release>
+  <api>0.1</api>
+ </version>
+ <stability>
+  <release>beta</release>
+  <api>beta</api>
+ </stability>
+ <license filesource="LICENSE">BSD</license>
+ <notes>
+  - Initial release
+ </notes>
+ <contents>
+  <dir name="/">
+   <file name="LICENSE" role="doc" />
+   <file name="CREDITS" role="doc" />
+   <file name="config.m4" role="src" />
+   <file name="config.w32" role="src" />
+   <file name="php_jsmin.c" role="src" />
+   <file name="php_jsmin.h" role="src" />
+   <file name="jsmin.c" role="src" />
+   <file name="jsmin.h" role="src" />
+   <dir name="tests">
+    <file name="strip-comments.phpt" role="test" />
+    <file name="missing-argument.phpt" role="test" />
+    <file name="unterminated-comment.phpt" role="test" />
+    <file name="unterminated-regex.phpt" role="test" />
+    <file name="unterminated-string.phpt" role="test" />
+   </dir>
+  </dir>
+ </contents>
+ <dependencies>
+  <required>
+   <php>
+    <min>5.0.0</min>
+   </php>
+  </required>
+ </dependencies>
+ <providesextension>jsmin</providesextension>
+ <extsrcrelease />
+ <changelog> 
+  <release> 
+   <date>2012-09-16</date> 
+   <version> 
+    <release>0.1</release> 
+    <api>0.1</api> 
+   </version> 
+   <stability> 
+    <release>beta</release> 
+    <api>beta</api> 
+   </stability>  
+   <notes>
+    - Initial release
+   </notes> 
+  </release> 
+ </changelog>
+</package>
+<!--
+vim:et:ts=1:sw=1
+--> 

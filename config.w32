@@ -1,0 +1,9 @@
+// $Id$
+// vim:ft=javascript
+
+ARG_ENABLE("jsmin", "enable jsmin support", "no");
+
+if (PHP_JSMIN != "no") {
+	EXTENSION("jsmin", "php_jsmin.c");
+	ADD_SOURCES(configure_module_dirname, "jsmin.c", "jsmin");
+}
