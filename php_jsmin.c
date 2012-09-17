@@ -29,7 +29,6 @@
 #include "jsmin.h"
 #include "php_jsmin.h"
 
-
 /* {{{ arginfo */
 ZEND_BEGIN_ARG_INFO_EX(arginfo_jsmin, 0, 0, 1)
 	ZEND_ARG_INFO(0, javascript)
@@ -71,8 +70,9 @@ PHP_FUNCTION(jsmin)
 	int argc = ZEND_NUM_ARGS();
 	int javascript_len;
 
-	if (zend_parse_parameters(argc TSRMLS_CC, "s", &javascript, &javascript_len) == FAILURE) 
+	if (zend_parse_parameters(argc TSRMLS_CC, "s", &javascript, &javascript_len) == FAILURE) {
 		return;
+	}
 
 	if (!javascript_len)
 		RETURN_NULL();

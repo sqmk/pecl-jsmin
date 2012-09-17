@@ -269,8 +269,9 @@ jsmin(char* javascript TSRMLS_DC)
 	jmo->theA = '\n';
 	jsmin_action(3, jmo);
 	while (jmo->theA != 0) {
-		if (jmo->isFailed)
-			break;	  
+		if (jmo->isFailed) {
+			break;
+		}
 		switch (jmo->theA) {
 		case ' ':
 			if (jsmin_isAlphanum(jmo->theB)) {
@@ -338,7 +339,7 @@ jsmin(char* javascript TSRMLS_DC)
 	}
 
 	minified = estrndup(jmo->buffer->c, jmo->buffer->len);
-	
+
 	free_jsmin_obj(jmo TSRMLS_CC);
 
 	return minified;
