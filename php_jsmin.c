@@ -74,7 +74,7 @@ PHP_FUNCTION(jsmin)
 		return;
 	}
 
-	ZVAL_STRING(return_value, jsmin(javascript TSRMLS_CC), 1);
+	RETURN_STRING(jsmin(javascript TSRMLS_CC), 0);
 }
 /* }}} */
 
