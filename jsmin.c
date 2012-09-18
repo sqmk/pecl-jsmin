@@ -63,7 +63,8 @@ static void
 free_jsmin_obj(jsmin_obj *jmo TSRMLS_DC)
 {
 	smart_str_free(jmo->buffer);
-	efree((void*)jmo);
+	efree(jmo->buffer);
+	efree(jmo);
 }
 
 /* jsmin_error -- sets failure on struct and fires warning
