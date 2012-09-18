@@ -44,11 +44,10 @@ typedef struct {
 static jsmin_obj*
 new_jsmin_obj(char *javascript TSRMLS_DC)
 {
-	smart_str buffer  = {0};
-	jsmin_obj *jmo    = (jsmin_obj*)emalloc(sizeof(jsmin_obj));
+	jsmin_obj *jmo    = emalloc(sizeof(jsmin_obj));
 
 	jmo->javascript   = javascript;
-	jmo->buffer       = &buffer;
+	jmo->buffer       = emalloc(sizeof(smart_str));
 	jmo->theLookahead = 0;
 	jmo->theX         = 0;
 	jmo->theY         = 0;
