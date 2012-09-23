@@ -42,16 +42,12 @@ typedef struct {
 */
 
 static jsmin_obj*
-new_jsmin_obj(char *javascript TSRMLS_DC)
+new_jsmin_obj(char *javascript, smart_str *buffer TSRMLS_DC)
 {
-	jsmin_obj *jmo    = emalloc(sizeof(jsmin_obj));
-
-	jmo->javascript   = javascript;
-	jmo->buffer       = emalloc(sizeof(smart_str));
-	jmo->theLookahead = 0;
-	jmo->theX         = 0;
-	jmo->theY         = 0;
-	jmo->isFailed     = 0;
+	jsmin_obj *jmo  = emalloc(sizeof(jsmin_obj));
+	jmo->javascript = javascript;
+	jmo->buffer     = buffer;
+	jmo->theA       = '\n';
 
 	return jmo;
 }
@@ -63,8 +59,8 @@ static void
 free_jsmin_obj(jsmin_obj *jmo TSRMLS_DC)
 {
 	smart_str_free(jmo->buffer);
-	efree(jmo->buffer);
 	efree(jmo);
+	memset(jmo, 0, sizeof(jsmin_obj));
 }
 
 /* jsmin_error -- sets failure on struct and fires warning
@@ -259,9 +255,9 @@ char *
 jsmin(char* javascript TSRMLS_DC)
 {
 	char *minified;
-	jsmin_obj *jmo = new_jsmin_obj(javascript TSRMLS_CC);
+	smart_str buffer = {0};
+	jsmin_obj *jmo = new_jsmin_obj(javascript, &buffer TSRMLS_CC);
 
-	jmo->theA = '\n';
 	jsmin_action(3, jmo);
 	while (jmo->theA != 0) {
 		if (jmo->isFailed) {
