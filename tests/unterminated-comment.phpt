@@ -4,6 +4,7 @@ Warning message on unterminated comment
 <?php
 
 $js = <<<JS
+alert('test');
 /* Deliberate unterminated comment
 
 alert('test');

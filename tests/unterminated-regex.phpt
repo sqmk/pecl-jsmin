@@ -11,5 +11,3 @@ echo jsmin($js);
 
 --EXPECTF--
 Warning: jsmin() unterminated Regular Expression literal in %s on line %d
-
-var str=/test regular expression

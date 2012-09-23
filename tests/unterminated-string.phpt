@@ -11,5 +11,3 @@ echo jsmin($js);
 
 --EXPECTF--
 Warning: jsmin() unterminated string literal in %s on line %d
-
-var str="Test
