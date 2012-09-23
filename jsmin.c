@@ -44,7 +44,7 @@ typedef struct {
 static jsmin_obj*
 new_jsmin_obj(char *javascript, smart_str *buffer TSRMLS_DC)
 {
-	jsmin_obj *jmo  = emalloc(sizeof(jsmin_obj));
+	jsmin_obj *jmo = emalloc(sizeof(jsmin_obj));
 	memset(jmo, 0, sizeof(jsmin_obj));
 
 	jmo->javascript = javascript;
@@ -330,7 +330,11 @@ jsmin(char *javascript, zval *return_value TSRMLS_DC)
 		}
 	}
 
-	ZVAL_STRINGL(return_value, (&buffer)->c, (&buffer)->len, 1);
+	if (jmo->isFailed) {
+		ZVAL_BOOL(return_value, 0);
+	} else {
+		ZVAL_STRINGL(return_value, (&buffer)->c, (&buffer)->len, 1);
+	}
 
 	free_jsmin_obj(jmo TSRMLS_CC);
 }
