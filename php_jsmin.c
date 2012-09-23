@@ -74,7 +74,7 @@ PHP_FUNCTION(jsmin)
 		return;
 	}
 
-	RETURN_STRING(jsmin(javascript TSRMLS_CC), 0);
+	jsmin(javascript, return_value TSRMLS_CC);
 }
 /* }}} */
 

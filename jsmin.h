@@ -6,5 +6,5 @@
 #include "php.h"
 #include "ext/standard/php_smart_str.h"
 
-extern char* jsmin(char *javascript TSRMLS_DC);
+extern void* jsmin(char *javascript, zval *return_value TSRMLS_DC);
 #endif

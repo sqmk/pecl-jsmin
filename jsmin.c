@@ -252,8 +252,8 @@ jsmin_action(int d, jsmin_obj *jmo)
 		Most spaces and linefeeds will be removed.
 */
 
-char *
-jsmin(char* javascript TSRMLS_DC)
+void*
+jsmin(char *javascript, zval *return_value TSRMLS_DC)
 {
 	char *minified;
 	smart_str buffer = {0};
@@ -330,9 +330,7 @@ jsmin(char* javascript TSRMLS_DC)
 		}
 	}
 
-	minified = estrndup(jmo->buffer->c, jmo->buffer->len);
+	ZVAL_STRINGL(return_value, (&buffer)->c, (&buffer)->len, 1);
 
 	free_jsmin_obj(jmo TSRMLS_CC);
-
-	return minified;
 }
