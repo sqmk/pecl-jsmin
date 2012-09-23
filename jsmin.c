@@ -99,8 +99,7 @@ jsmin_get(jsmin_obj *jmo)
 	int c = jmo->theLookahead;
 	jmo->theLookahead = 0;
 	if (c == 0) {
-		c = *jmo->javascript;
-		++(jmo->javascript);
+		c = *(jmo->javascript++);
 		jmo->theY = jmo->theX;
 		jmo->theX = c;
 	}

@@ -23,9 +23,6 @@
 #endif
 
 #include "php.h"
-#include "php_ini.h"
-#include "ext/standard/info.h"
-#include "ext/standard/php_smart_str.h"
 #include "jsmin.h"
 #include "php_jsmin.h"
 
@@ -66,11 +63,10 @@ ZEND_GET_MODULE(jsmin)
     */
 PHP_FUNCTION(jsmin)
 {
-	char *javascript = NULL;
-	int argc = ZEND_NUM_ARGS();
+	char *javascript;
 	int javascript_len;
 
-	if (zend_parse_parameters(argc TSRMLS_CC, "s", &javascript, &javascript_len) == FAILURE) {
+	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "s", &javascript, &javascript_len) == FAILURE) {
 		return;
 	}
 
