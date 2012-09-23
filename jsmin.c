@@ -45,6 +45,8 @@ static jsmin_obj*
 new_jsmin_obj(char *javascript, smart_str *buffer TSRMLS_DC)
 {
 	jsmin_obj *jmo  = emalloc(sizeof(jsmin_obj));
+	memset(jmo, 0, sizeof(jsmin_obj));
+
 	jmo->javascript = javascript;
 	jmo->buffer     = buffer;
 	jmo->theA       = '\n';
@@ -60,7 +62,6 @@ free_jsmin_obj(jsmin_obj *jmo TSRMLS_DC)
 {
 	smart_str_free(jmo->buffer);
 	efree(jmo);
-	memset(jmo, 0, sizeof(jsmin_obj));
 }
 
 /* jsmin_error -- sets failure on struct and fires warning
