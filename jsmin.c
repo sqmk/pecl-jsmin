@@ -261,11 +261,6 @@ jsmin(char* javascript TSRMLS_DC)
 	char *minified;
 	jsmin_obj *jmo = new_jsmin_obj(javascript TSRMLS_CC);
 
-	if (jsmin_peek(jmo) == 0xEF) {
-		jsmin_get(jmo);
-		jsmin_get(jmo);
-		jsmin_get(jmo);
-	}
 	jmo->theA = '\n';
 	jsmin_action(3, jmo);
 	while (jmo->theA != 0) {
