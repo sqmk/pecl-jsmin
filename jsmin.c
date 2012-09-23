@@ -254,7 +254,6 @@ jsmin_action(int d, jsmin_obj *jmo)
 void*
 jsmin(char *javascript, zval *return_value TSRMLS_DC)
 {
-	char *minified;
 	smart_str buffer = {0};
 	jsmin_obj *jmo = new_jsmin_obj(javascript, &buffer TSRMLS_CC);
 
