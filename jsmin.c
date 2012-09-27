@@ -29,7 +29,7 @@ SOFTWARE.
 
 typedef struct {
 	char *javascript;
-	smart_str *buffer;
+	smart_str buffer;
 	int theA;
 	int theB;
 	int theLookahead;
@@ -42,12 +42,11 @@ typedef struct {
 */
 
 static jsmin_obj*
-new_jsmin_obj(char *javascript, smart_str *buffer TSRMLS_DC)
+new_jsmin_obj(char *javascript TSRMLS_DC)
 {
-	jsmin_obj *jmo = ecalloc(1, sizeof(jsmin_obj));
-
+	jsmin_obj *jmo  = ecalloc(1, sizeof(jsmin_obj));
 	jmo->javascript = javascript;
-	jmo->buffer     = buffer;
+	jmo->buffer     = (smart_str) {0};
 	jmo->theA       = '\n';
 
 	return jmo;
@@ -59,7 +58,7 @@ new_jsmin_obj(char *javascript, smart_str *buffer TSRMLS_DC)
 static void
 free_jsmin_obj(jsmin_obj *jmo TSRMLS_DC)
 {
-	smart_str_free(jmo->buffer);
+	smart_str_free(&jmo->buffer);
 	efree(jmo);
 }
 
@@ -176,21 +175,21 @@ jsmin_action(int d, jsmin_obj *jmo)
 {
 	switch (d) {
 	case 1:
-		smart_str_appendc(jmo->buffer, jmo->theA);
+		smart_str_appendc(&jmo->buffer, jmo->theA);
 		if (jmo->theA == jmo->theB && (jmo->theA == '+' || jmo->theA == '-') && jmo->theY != jmo->theA) {
-			smart_str_appendc(jmo->buffer, ' ');
+			smart_str_appendc(&jmo->buffer, ' ');
 		}
 	case 2:
 		jmo->theA = jmo->theB;
 		if (jmo->theA == '\'' || jmo->theA == '"' || jmo->theA == '`') {
 			for (;;) {
-				smart_str_appendc(jmo->buffer, jmo->theA);
+				smart_str_appendc(&jmo->buffer, jmo->theA);
 				jmo->theA = jsmin_get(jmo);
 				if (jmo->theA == jmo->theB) {
 					break;
 				}
 				if (jmo->theA == '\\') {
-					smart_str_appendc(jmo->buffer, jmo->theA);
+					smart_str_appendc(&jmo->buffer, jmo->theA);
 					jmo->theA = jsmin_get(jmo);
 				}
 				if (jmo->theA == 0) {
@@ -206,19 +205,19 @@ jsmin_action(int d, jsmin_obj *jmo)
 							jmo->theA == '&' || jmo->theA == '|' || jmo->theA == '?' ||
 							jmo->theA == '{' || jmo->theA == '}' || jmo->theA == ';' ||
 							jmo->theA == '\n')) {
-			smart_str_appendc(jmo->buffer, jmo->theA);
-			smart_str_appendc(jmo->buffer, jmo->theB);
+			smart_str_appendc(&jmo->buffer, jmo->theA);
+			smart_str_appendc(&jmo->buffer, jmo->theB);
 			for (;;) {
 				jmo->theA = jsmin_get(jmo);
 				if (jmo->theA == '[') {
 					for (;;) {
-						smart_str_appendc(jmo->buffer, jmo->theA);
+						smart_str_appendc(&jmo->buffer, jmo->theA);
 						jmo->theA = jsmin_get(jmo);
 						if (jmo->theA == ']') {
 							break;
 						}
 						if (jmo->theA == '\\') {
-							smart_str_appendc(jmo->buffer, jmo->theA);
+							smart_str_appendc(&jmo->buffer, jmo->theA);
 							jmo->theA = jsmin_get(jmo);
 						}
 						if (jmo->theA == 0) {
@@ -229,14 +228,14 @@ jsmin_action(int d, jsmin_obj *jmo)
 				} else if (jmo->theA == '/') {
 					break;
 				} else if (jmo->theA =='\\') {
-					smart_str_appendc(jmo->buffer, jmo->theA);
+					smart_str_appendc(&jmo->buffer, jmo->theA);
 					jmo->theA = jsmin_get(jmo);
 				}
 				if (jmo->theA == 0) {
 					jsmin_error("unterminated Regular Expression literal", jmo);
 					return;
 				}
-				smart_str_appendc(jmo->buffer, jmo->theA);
+				smart_str_appendc(&jmo->buffer, jmo->theA);
 			}
 			jmo->theB = jsmin_next(jmo);
 		}
@@ -253,8 +252,7 @@ jsmin_action(int d, jsmin_obj *jmo)
 void*
 jsmin(char *javascript, zval *return_value TSRMLS_DC)
 {
-	smart_str buffer = {0};
-	jsmin_obj *jmo = new_jsmin_obj(javascript, &buffer TSRMLS_CC);
+	jsmin_obj *jmo = new_jsmin_obj(javascript TSRMLS_CC);
 
 	jsmin_action(3, jmo);
 	while (jmo->theA != 0) {
@@ -330,7 +328,7 @@ jsmin(char *javascript, zval *return_value TSRMLS_DC)
 	if (jmo->isFailed) {
 		ZVAL_BOOL(return_value, 0);
 	} else {
-		ZVAL_STRINGL(return_value, (&buffer)->c, (&buffer)->len, 1);
+		ZVAL_STRINGL(return_value, jmo->buffer.c, jmo->buffer.len, 1);
 	}
 
 	free_jsmin_obj(jmo TSRMLS_CC);
