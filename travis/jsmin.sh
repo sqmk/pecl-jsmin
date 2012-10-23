@@ -2,8 +2,8 @@
 
 if [ $PHP_OLDER_AUTOCONF ]
 then
-    sudo apt-get install autoconf2.13 
-    export PHP_AUTOCONF=`which autoconf-2.13`
+    sudo apt-get install autoconf2.59 
+    export PHP_AUTOCONF=`which autoconf-2.59`
 fi
 
 # PHP Settings
