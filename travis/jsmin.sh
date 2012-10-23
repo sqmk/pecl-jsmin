@@ -11,7 +11,7 @@ git clone https://github.com/sqmk/pecl-jsmin.git ext/jsmin
 # Build PHP
 ./buildconf --force
 ./configure --disable-all --enable-debug --enable-jsmin
-make
+make --quiet
 
 # Run tests
 TEST_PHP_EXECUTABLE=sapi/cli/php sapi/cli/php run-tests.php ext/jsmin  
