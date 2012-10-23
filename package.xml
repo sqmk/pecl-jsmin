@@ -7,27 +7,28 @@
  <lead>
   <name>Michael K. Squires</name>
   <user>sqmk</user>
-  <email>squiresmk@gmail.com</email>
+  <email>sqmk@php.net</email>
   <active>yes</active>
  </lead>
- <date>2012-09-16</date>
- <time>14:10:08</time>
+ <date>2012-10-22</date>
+ <time>18:24:05</time>
  <version>
-  <release>0.1</release>
-  <api>0.1</api>
+  <release>0.1.0</release>
+  <api>0.1.0</api>
  </version>
  <stability>
   <release>beta</release>
   <api>beta</api>
  </stability>
- <license filesource="LICENSE">BSD</license>
+ <license filesource="LICENSE">PHP License</license>
  <notes>
   - Initial release
  </notes>
  <contents>
   <dir name="/">
-   <file name="LICENSE" role="doc" />
+   <file name="EXPERIMENTAL" role="doc" />
    <file name="CREDITS" role="doc" />
+   <file name="LICENSE" role="doc" />
    <file name="config.m4" role="src" />
    <file name="config.w32" role="src" />
    <file name="php_jsmin.c" role="src" />
@@ -35,8 +36,12 @@
    <file name="jsmin.c" role="src" />
    <file name="jsmin.h" role="src" />
    <dir name="tests">
-    <file name="strip-comments.phpt" role="test" />
+    <file name="call-multiple-times.phpt" role="test" />
+    <file name="false-on-failure.phpt" role="test" />
+    <file name="issue-03-string-type-on-empty-arg.phpt" />
+    <file name="issue-07-no-unexpected-bytes-on-empty.phpt" />
     <file name="missing-argument.phpt" role="test" />
+    <file name="strip-comments.phpt" role="test" />
     <file name="unterminated-comment.phpt" role="test" />
     <file name="unterminated-regex.phpt" role="test" />
     <file name="unterminated-string.phpt" role="test" />
@@ -54,10 +59,10 @@
  <extsrcrelease />
  <changelog> 
   <release> 
-   <date>2012-09-16</date> 
+   <date>2012-10-22</date> 
    <version> 
-    <release>0.1</release> 
-    <api>0.1</api> 
+    <release>0.1.0</release> 
+    <api>0.1.0</api> 
    </version> 
    <stability> 
     <release>beta</release> 
