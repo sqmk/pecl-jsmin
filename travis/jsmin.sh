@@ -1,5 +1,7 @@
 #!/usr/bin/env sh
 
+ls -al /usr/bin
+
 # PHP Settings
 PHP_BASE="php-$PHP_VERSION"
 PHP_PACKAGE="php-$PHP_VERSION.tar.bz2"
