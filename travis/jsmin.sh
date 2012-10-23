@@ -17,4 +17,4 @@ mv ../pecl-jsmin ext/jsmin
 make
 
 # Run tests
-TEST_PHP_EXECUTABLE=sapi/cli/php sapi/cli/php run-tests.php ext/jsmin  
+./run-tests.php ext/jsmin  
