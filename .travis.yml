@@ -1,6 +1,3 @@
 language: c
 
-env:
-    - REPORT_EXIT_STATUS=1 TEST_PHP_EXECUTABLE=sapi/cli/php
-
 script: ./travis/jsmin.sh

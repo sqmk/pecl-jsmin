@@ -17,4 +17,6 @@ mv ../pecl-jsmin ext/jsmin
 make
 
 # Run tests
+export REPORT_EXIT_STATUS=1
+export TEST_PHP_EXECUTABLE=sapi/cli/php
 sapi/cli/php run-tests.php ext/jsmin  
