@@ -1,6 +1,10 @@
 #!/usr/bin/env sh
 
-ls -al /usr/bin
+if [ $PHP_AUTOCONF ]
+then
+    apt-get install autoconf-2.13
+    export PHP_AUTOCONF=autoconf-2.13
+fi
 
 # PHP Settings
 PHP_BASE="php-$PHP_VERSION"
