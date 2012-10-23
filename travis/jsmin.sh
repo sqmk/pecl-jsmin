@@ -1,9 +1,9 @@
 #!/usr/bin/env sh
 
-if [ $PHP_AUTOCONF ]
+if [ $PHP_OLDER_AUTOCONF ]
 then
-    sudo apt-get install autoconf-2.13
-    export PHP_AUTOCONF=autoconf-2.13
+    sudo apt-get install autoconf2.13 
+    export PHP_AUTOCONF=`which autoconf-2.13`
 fi
 
 # PHP Settings
