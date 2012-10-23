@@ -13,4 +13,4 @@ JS;
 echo jsmin($js);
 
 --EXPECTF--
-Warning: jsmin() unterminated comment in %s on line %d TEST FAIL
+Warning: jsmin() unterminated comment in %s on line %d
