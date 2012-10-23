@@ -42,3 +42,9 @@ And example output is the following:
 ```php
 var notes="jsmin is easy!";
 ```
+
+### Credits
+
+[Discovery Communications](http://discovery.com) developed a similar extension in-house for minifying bundled JavaScript.
+
+I decided to take the most recent source from [Douglas Crockford's JSMin](/douglascrockford/JSMin) and port / manage the extension for PECL.
