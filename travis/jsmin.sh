@@ -1,12 +1,17 @@
 #!/usr/bin/env sh
 
+# PHP Settings
+PHP_BASE="php-$PHP_VERSION"
+PHP_PACKAGE="php-$PHP_VERSION.tar.bz2"
+PHP_URL="http://us1.php.net/get/$PHP_PACKAGE/from/this/mirror"
+
 # Move out of project 
 cd ../
 
 # Get and extract PHP
-wget http://uk3.php.net/get/php-5.4.7.tar.bz2/from/this/mirror -O php-5.4.7.tar.bz2
-tar -xf php-5.4.7.tar.bz2
-cd php-5.4.7
+wget $PHP_URL -O $PHP_PACKAGE
+tar -xf $PHP_PACKAGE 
+cd $PHP_BASE 
 
 # Clone into ext directory
 mv ../pecl-jsmin ext/jsmin

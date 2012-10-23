@@ -1,3 +1,10 @@
 language: c
 
+env:
+    - PHP_VERSION=5.3.18
+    - PHP_VERSION=5.4.8
+
 script: ./travis/jsmin.sh
+
+notifications:
+    email: false
