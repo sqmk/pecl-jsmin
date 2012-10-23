@@ -1,7 +1,7 @@
 language: c
 
 env:
-    - PHP_VERSION=5.3.18
+    - PHP_VERSION=5.3.18 PHP_AUTOCONF=autoconf-2.13
     - PHP_VERSION=5.4.8
 
 script: ./travis/jsmin.sh
