@@ -1,3 +1,7 @@
+### jsmin - JavaScript Minifier, PECL extension for PHP
+
+Master: [![Build Status](https://secure.travis-ci.org/sqmk/pecl-jsmin.png)](http://travis-ci.org/sqmk/pecl-jsmin)
+
 This extension adds Douglas Crockford's jsmin functionality to PHP.
 
 http://www.crockford.com/javascript/jsmin.html
