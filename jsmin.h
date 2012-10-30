@@ -1,4 +1,4 @@
-/* json.h */
+/* jsmin.h */
 
 #ifndef JSMIN_H
 #define JSMIN_H
@@ -6,5 +6,25 @@
 #include "php.h"
 #include "ext/standard/php_smart_str.h"
 
-extern void* jsmin(char *javascript, zval *return_value TSRMLS_DC);
+typedef struct {
+	char *javascript;
+	smart_str buffer;
+	int theA;
+	int theB;
+	int theLookahead;
+	int theX;
+	int theY;
+	int errorCode;
+} jsmin_obj;
+
+enum error_codes {
+	PHP_JSMIN_ERROR_NONE = 0,
+	PHP_JSMIN_ERROR_UNTERMINATED_COMMENT,
+	PHP_JSMIN_ERROR_UNTERMINATED_STRING,
+	PHP_JSMIN_ERROR_UNTERMINATED_REGEX
+};
+
+extern jsmin_obj* jsmin(char *javascript TSRMLS_DC);
+extern void* free_jsmin_obj(jsmin_obj *jmo TSRMLS_DC);
+
 #endif

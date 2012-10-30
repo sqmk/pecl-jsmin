@@ -1,5 +1,5 @@
 --TEST--
-Warning message on unterminated string
+Last error is unterminated string
 --FILE--
 <?php
 
@@ -9,5 +9,9 @@ JS;
 
 echo jsmin($js);
 
+if (jsmin_last_error() == JSMIN_ERROR_UNTERMINATED_STRING) {
+	echo jsmin_last_error_msg();
+}
+
 --EXPECTF--
-Warning: jsmin() unterminated string literal in %s on line %d
+Unterminated string literal

@@ -15,5 +15,4 @@ if (jsmin($js) === false) {
 }
 
 --EXPECTF--
-Warning: jsmin() unterminated comment in %s on line %d
 is boolean false

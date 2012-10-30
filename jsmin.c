@@ -27,17 +27,6 @@ SOFTWARE.
 #include <stdio.h>
 #include "jsmin.h"
 
-typedef struct {
-	char *javascript;
-	smart_str buffer;
-	int theA;
-	int theB;
-	int theLookahead;
-	int theX;
-	int theY;
-	int isFailed;
-} jsmin_obj;
-
 /* new_jsmin_obj -- sets up new struct for assisting in minification
 */
 
@@ -48,6 +37,7 @@ new_jsmin_obj(char *javascript TSRMLS_DC)
 	jmo->javascript = javascript;
 	jmo->buffer     = (smart_str) {0};
 	jmo->theA       = '\n';
+	jmo->errorCode  = 0;
 
 	return jmo;
 }
@@ -55,22 +45,11 @@ new_jsmin_obj(char *javascript TSRMLS_DC)
 /* free_jsmin_obj -- frees up memory on struct
 */
 
-static void
+void*
 free_jsmin_obj(jsmin_obj *jmo TSRMLS_DC)
 {
 	smart_str_free(&jmo->buffer);
 	efree(jmo);
-}
-
-/* jsmin_error -- sets failure on struct and fires warning
-*/
-
-static void
-jsmin_error(char *s, jsmin_obj *jmo)
-{
-	jmo->isFailed = 1;
-
-	zend_error(E_WARNING, "jsmin() %s", s);
 }
 
 /* jsmin_isAlphanum -- return true if the character is a letter, digit, underscore,
@@ -150,7 +129,7 @@ jsmin_next(jsmin_obj *jmo)
 					}
 					break;
 				case 0:
-					jsmin_error("unterminated comment", jmo);
+					jmo->errorCode = PHP_JSMIN_ERROR_UNTERMINATED_COMMENT;
 					return;
 				}
 			}
@@ -193,7 +172,7 @@ jsmin_action(int d, jsmin_obj *jmo)
 					jmo->theA = jsmin_get(jmo);
 				}
 				if (jmo->theA == 0) {
-					jsmin_error("unterminated string literal", jmo);
+					jmo->errorCode = PHP_JSMIN_ERROR_UNTERMINATED_STRING;
 					return;
 				}
 			}
@@ -221,7 +200,7 @@ jsmin_action(int d, jsmin_obj *jmo)
 							jmo->theA = jsmin_get(jmo);
 						}
 						if (jmo->theA == 0) {
-							jsmin_error("unterminated set in Regular Expression literal", jmo);
+							jmo->errorCode = PHP_JSMIN_ERROR_UNTERMINATED_REGEX;
 							return;
 						}
 					}
@@ -232,7 +211,7 @@ jsmin_action(int d, jsmin_obj *jmo)
 					jmo->theA = jsmin_get(jmo);
 				}
 				if (jmo->theA == 0) {
-					jsmin_error("unterminated Regular Expression literal", jmo);
+					jmo->errorCode = PHP_JSMIN_ERROR_UNTERMINATED_REGEX;
 					return;
 				}
 				smart_str_appendc(&jmo->buffer, jmo->theA);
@@ -249,14 +228,14 @@ jsmin_action(int d, jsmin_obj *jmo)
 		Most spaces and linefeeds will be removed.
 */
 
-void*
-jsmin(char *javascript, zval *return_value TSRMLS_DC)
+jsmin_obj*
+jsmin(char *javascript TSRMLS_DC)
 {
 	jsmin_obj *jmo = new_jsmin_obj(javascript TSRMLS_CC);
 
 	jsmin_action(3, jmo);
 	while (jmo->theA != 0) {
-		if (jmo->isFailed) {
+		if (jmo->errorCode) {
 			break;
 		}
 		switch (jmo->theA) {
@@ -325,11 +304,5 @@ jsmin(char *javascript, zval *return_value TSRMLS_DC)
 		}
 	}
 
-	if (jmo->isFailed) {
-		ZVAL_BOOL(return_value, 0);
-	} else {
-		ZVAL_STRINGL(return_value, jmo->buffer.c, jmo->buffer.len, 1);
-	}
-
-	free_jsmin_obj(jmo TSRMLS_CC);
+	return jmo;
 }

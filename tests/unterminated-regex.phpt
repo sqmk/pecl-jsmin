@@ -1,5 +1,5 @@
 --TEST--
-Warning message on unterminated regular expression
+Last error is unterminated regular expression
 --FILE--
 <?php
 
@@ -9,5 +9,9 @@ JS;
 
 echo jsmin($js);
 
+if (jsmin_last_error() == JSMIN_ERROR_UNTERMINATED_REGEX) {
+	echo jsmin_last_error_msg();
+}
+
 --EXPECTF--
-Warning: jsmin() unterminated Regular Expression literal in %s on line %d
+Unterminated set in Regular Expression literal

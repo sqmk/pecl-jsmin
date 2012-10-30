@@ -26,17 +26,47 @@
 #include "jsmin.h"
 #include "php_jsmin.h"
 
+ZEND_DECLARE_MODULE_GLOBALS(jsmin)
+
 /* {{{ arginfo */
 ZEND_BEGIN_ARG_INFO_EX(arginfo_jsmin, 0, 0, 1)
 	ZEND_ARG_INFO(0, javascript)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO(arginfo_jsmin_last_error, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO(arginfo_jsmin_last_error_msg, 0)
 ZEND_END_ARG_INFO()
 /* }}} */
 
 /* {{{ jsmin_functions[] */
 const zend_function_entry jsmin_functions[] = {
 	PHP_FE(jsmin, arginfo_jsmin)
+	PHP_FE(jsmin_last_error, arginfo_jsmin_last_error)
+	PHP_FE(jsmin_last_error_msg, arginfo_jsmin_last_error_msg)
 	PHP_FE_END
 };
+/* }}} */
+
+/* {{{ MINIT */
+static PHP_MINIT_FUNCTION(jsmin)
+{
+	REGISTER_LONG_CONSTANT("JSMIN_ERROR_NONE",                 PHP_JSMIN_ERROR_NONE,                 CONST_CS | CONST_PERSISTENT);
+	REGISTER_LONG_CONSTANT("JSMIN_ERROR_UNTERMINATED_COMMENT", PHP_JSMIN_ERROR_UNTERMINATED_COMMENT, CONST_CS | CONST_PERSISTENT);
+	REGISTER_LONG_CONSTANT("JSMIN_ERROR_UNTERMINATED_STRING",  PHP_JSMIN_ERROR_UNTERMINATED_STRING,  CONST_CS | CONST_PERSISTENT);
+	REGISTER_LONG_CONSTANT("JSMIN_ERROR_UNTERMINATED_REGEX",   PHP_JSMIN_ERROR_UNTERMINATED_REGEX,   CONST_CS | CONST_PERSISTENT);
+
+	return SUCCESS;
+}
+/* }}} */
+
+/* {{{ PHP_GINIT_FUNCTION
+*/
+static PHP_GINIT_FUNCTION(jsmin)
+{
+	jsmin_globals->error_code = 0;
+}
 /* }}} */
 
 /* {{{ jsmin_module_entry
@@ -45,13 +75,17 @@ zend_module_entry jsmin_module_entry = {
 	STANDARD_MODULE_HEADER,
 	"jsmin",
 	jsmin_functions,
-	NULL,
+	PHP_MINIT(jsmin),
 	NULL,
 	NULL,
 	NULL,
 	PHP_MINFO(jsmin),
 	PHP_JSMIN_VERSION,
-	STANDARD_MODULE_PROPERTIES
+	PHP_MODULE_GLOBALS(jsmin),
+	PHP_GINIT(jsmin),
+	NULL,
+	NULL,
+	STANDARD_MODULE_PROPERTIES_EX
 };
 /* }}} */
 
@@ -60,17 +94,64 @@ ZEND_GET_MODULE(jsmin)
 #endif
 
 /* {{{ proto string jsmin(string javascript)
-    */
+   Minifies JavaScript */
 PHP_FUNCTION(jsmin)
 {
 	char *javascript;
 	int javascript_len;
+	jsmin_obj *jmo;
 
 	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "s", &javascript, &javascript_len) == FAILURE) {
 		return;
 	}
 
-	jsmin(javascript, return_value TSRMLS_CC);
+	jmo = jsmin(javascript TSRMLS_CC);
+	JSMIN_G(error_code) = jmo->errorCode;
+
+	if (jmo->errorCode) {
+		JSMIN_G(error_code) = jmo->errorCode;
+		ZVAL_BOOL(return_value, 0);
+	} else {
+		ZVAL_STRINGL(return_value, jmo->buffer.c, jmo->buffer.len, 1);
+	}
+
+	free_jsmin_obj(jmo TSRMLS_CC);
+}
+/* }}} */
+
+/* {{{ proto int jsmin_last_error()
+   Returns error code of last call to jsmin() */
+PHP_FUNCTION(jsmin_last_error)
+{
+	if (zend_parse_parameters_none() == FAILURE) {
+		return;
+	}
+
+	RETURN_LONG(JSMIN_G(error_code));
+}
+/* }}} */
+
+/* {{{ proto string jsmin_last_error_msg()
+   Returns error message of last call to jsmin() */
+PHP_FUNCTION(jsmin_last_error_msg)
+{
+	if (zend_parse_parameters_none() == FAILURE) {
+		return;
+	}
+
+	switch (JSMIN_G(error_code)) {
+		case PHP_JSMIN_ERROR_UNTERMINATED_COMMENT:
+			RETURN_STRING("Unterminated comment", 1);
+
+		case PHP_JSMIN_ERROR_UNTERMINATED_STRING:
+			RETURN_STRING("Unterminated string literal", 1);
+
+		case PHP_JSMIN_ERROR_UNTERMINATED_REGEX:
+			RETURN_STRING("Unterminated set in Regular Expression literal", 1);
+
+		default:
+			RETURN_STRING("No error", 0);
+	}
 }
 /* }}} */
 
