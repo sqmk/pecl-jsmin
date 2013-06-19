@@ -1,5 +1,5 @@
 /* jsmin.c
-   2012-07-02
+   2012-11-06
 
 Copyright (c) 2002 Douglas Crockford  (www.crockford.com)
 
@@ -130,7 +130,7 @@ jsmin_next(jsmin_obj *jmo)
 					break;
 				case 0:
 					jmo->errorCode = PHP_JSMIN_ERROR_UNTERMINATED_COMMENT;
-					return;
+					return ' ';
 				}
 			}
 		default:
@@ -182,8 +182,8 @@ jsmin_action(int d, jsmin_obj *jmo)
 		if (jmo->theB == '/' && (jmo->theA == '(' || jmo->theA == ',' || jmo->theA == '=' ||
 							jmo->theA == ':' || jmo->theA == '[' || jmo->theA == '!' ||
 							jmo->theA == '&' || jmo->theA == '|' || jmo->theA == '?' ||
-							jmo->theA == '{' || jmo->theA == '}' || jmo->theA == ';' ||
-							jmo->theA == '\n')) {
+							jmo->theA == '+' || jmo->theA == '-' || jmo->theA == '~' ||
+							jmo->theA == '*' || jmo->theA == '\n')) {
 			smart_str_appendc(&jmo->buffer, jmo->theA);
 			smart_str_appendc(&jmo->buffer, jmo->theB);
 			for (;;) {
