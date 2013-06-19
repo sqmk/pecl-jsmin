@@ -1,5 +1,5 @@
 /* jsmin.c
-   2012-11-06
+   2013-03-29
 
 Copyright (c) 2002 Douglas Crockford  (www.crockford.com)
 
@@ -77,8 +77,6 @@ jsmin_get(jsmin_obj *jmo)
 	jmo->theLookahead = 0;
 	if (c == 0) {
 		c = *(jmo->javascript++);
-		jmo->theY = jmo->theX;
-		jmo->theX = c;
 	}
 	if (c >= ' ' || c == '\n' || c == 0) {
 		return c;
@@ -115,28 +113,31 @@ jsmin_next(jsmin_obj *jmo)
 			for (;;) {
 				c = jsmin_get(jmo);
 				if (c <= '\n') {
-					return c;
+                    break;
 				}
 			}
+            break;
 		case '*':
 			jsmin_get(jmo);
-			for (;;) {
+			while (c != ' ') {
 				switch (jsmin_get(jmo)) {
 				case '*':
 					if (jsmin_peek(jmo) == '/') {
 						jsmin_get(jmo);
-						return ' ';
+						c = ' ';
 					}
 					break;
 				case 0:
 					jmo->errorCode = PHP_JSMIN_ERROR_UNTERMINATED_COMMENT;
-					return ' ';
+					c = ' ';
 				}
 			}
 		default:
-			return c;
+        break;
 		}
 	}
+	jmo->theY = jmo->theX;
+	jmo->theX = c;
 	return c;
 }
 
@@ -155,8 +156,12 @@ jsmin_action(int d, jsmin_obj *jmo)
 	switch (d) {
 	case 1:
 		smart_str_appendc(&jmo->buffer, jmo->theA);
-		if (jmo->theA == jmo->theB && (jmo->theA == '+' || jmo->theA == '-') && jmo->theY != jmo->theA) {
-			smart_str_appendc(&jmo->buffer, ' ');
+		if (
+		    (jmo->theY == '\n' || jmo->theY == ' ') &&
+		    (jmo->theA == '+' || jmo->theA == '-' || jmo->theA == '*' || jmo->theA == '/') &&
+            (jmo->theB == '+' || jmo->theB == '-' || jmo->theB == '*' || jmo->theB == '/')
+		) {
+			smart_str_appendc(&jmo->buffer, jmo->theY);
 		}
 	case 2:
 		jmo->theA = jmo->theB;
@@ -183,8 +188,12 @@ jsmin_action(int d, jsmin_obj *jmo)
 							jmo->theA == ':' || jmo->theA == '[' || jmo->theA == '!' ||
 							jmo->theA == '&' || jmo->theA == '|' || jmo->theA == '?' ||
 							jmo->theA == '+' || jmo->theA == '-' || jmo->theA == '~' ||
-							jmo->theA == '*' || jmo->theA == '\n')) {
+							jmo->theA == '*' || jmo->theA == '/' || jmo->theA == '{' || 
+							jmo->theA == '\n')) {
 			smart_str_appendc(&jmo->buffer, jmo->theA);
+			if (jmo->theA == '/' || jmo->theA == '*') {
+			    smart_str_appendc(&jmo->buffer, ' ');
+            }
 			smart_str_appendc(&jmo->buffer, jmo->theB);
 			for (;;) {
 				jmo->theA = jsmin_get(jmo);
@@ -205,6 +214,12 @@ jsmin_action(int d, jsmin_obj *jmo)
 						}
 					}
 				} else if (jmo->theA == '/') {
+				    switch (jsmin_peek(jmo)) {
+                    case '/':
+                    case '*':
+                        jmo->errorCode = PHP_JSMIN_ERROR_UNTERMINATED_REGEX;
+                        return;
+                    }
 					break;
 				} else if (jmo->theA =='\\') {
 					smart_str_appendc(&jmo->buffer, jmo->theA);
@@ -240,11 +255,7 @@ jsmin(char *javascript TSRMLS_DC)
 		}
 		switch (jmo->theA) {
 		case ' ':
-			if (jsmin_isAlphanum(jmo->theB)) {
-				jsmin_action(1, jmo);
-			} else {
-				jsmin_action(2, jmo);
-			}
+			jsmin_action(jsmin_isAlphanum(jmo->theB) ? 1 : 2, jmo);
 			break;
 		case '\n':
 			switch (jmo->theB) {
@@ -261,21 +272,13 @@ jsmin(char *javascript TSRMLS_DC)
 				jsmin_action(3, jmo);
 				break;
 			default:
-				if (jsmin_isAlphanum(jmo->theB)) {
-					jsmin_action(1, jmo);
-				} else {
-					jsmin_action(2, jmo);
-				}
+				jsmin_action(jsmin_isAlphanum(jmo->theB) ? 1 : 2, jmo);
 			}
 			break;
 		default:
 			switch (jmo->theB) {
 			case ' ':
-				if (jsmin_isAlphanum(jmo->theA)) {
-					jsmin_action(1, jmo);
-					break;
-				}
-				jsmin_action(3, jmo);
+				jsmin_action(jsmin_isAlphanum(jmo->theA) ? 1 : 3, jmo);
 				break;
 			case '\n':
 				switch (jmo->theA) {
@@ -290,11 +293,7 @@ jsmin(char *javascript TSRMLS_DC)
 					jsmin_action(1, jmo);
 					break;
 				default:
-					if (jsmin_isAlphanum(jmo->theA)) {
-						jsmin_action(1, jmo);
-					} else {
-						jsmin_action(3, jmo);
-					}
+					jsmin_action(jsmin_isAlphanum(jmo->theA) ? 1 : 3, jmo);
 				}
 				break;
 			default:
