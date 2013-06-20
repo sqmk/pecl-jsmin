@@ -1,12 +1,18 @@
-### jsmin - JavaScript Minifier, PECL extension for PHP
+# jsmin - JavaScript Minifier, PECL extension for PHP
 
 Master: [![Build Status](https://secure.travis-ci.org/sqmk/pecl-jsmin.png)](http://travis-ci.org/sqmk/pecl-jsmin)
+
+## Introduction
 
 This extension adds Douglas Crockford's jsmin functionality to PHP.
 
 http://www.crockford.com/javascript/jsmin.html
 
-## Installing
+## Requirements
+
+This extension currently works with all versions of PHP 5.3 and PHP 5.4. Support for older verisons of PHP is not provided.
+
+## Installation
 
 To install, download the source and build as follows:
 
@@ -25,7 +31,11 @@ extension="jsmin.so"
 
 ## Usage
 
-Using jsmin is simple. Here is an example:
+Using jsmin is simple.
+
+### Function: jsmin
+
+Use this function to minify JavaScript. It accepts a single string argument.
 
 ```php
 <?php
@@ -41,9 +51,9 @@ JS;
 echo jsmin($javascript);
 ```
 
-And example output is the following:
+Example output is the following:
 
-```php
+```text
 var notes="jsmin is easy!";
 ```
 
