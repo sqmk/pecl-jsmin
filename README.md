@@ -1,4 +1,4 @@
-# jsmin - JavaScript Minifier, PECL extension for PHP
+# jsmin: PHP extension for JavaScript minification
 
 Master: [![Build Status](https://secure.travis-ci.org/sqmk/pecl-jsmin.png)](http://travis-ci.org/sqmk/pecl-jsmin)
 
@@ -57,7 +57,22 @@ Example output is the following:
 var notes="jsmin is easy!";
 ```
 
-### Credits
+### Function: jsmin_last_error
+
+Returns error code of last call to jsmin().
+
+### Function: jsmin_last_error_msg
+
+Returns an error message (string) for the last call to jsmin().
+
+### Constants
+
+* JSMIN_ERROR_NONE - No errors.
+* JSMIN_ERROR_UNTERMINATED_STRING - Unterminated string.
+* JSMIN_ERROR_UNTERMINATED_COMMENT - Unterminated comment.
+* JSMIN_ERROR_UNTERMINATED_REGEX - Unterminated regex.
+
+# Credits
 
 [Discovery Communications](http://discovery.com) developed a similar extension in-house for minifying bundled JavaScript.
 
