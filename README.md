@@ -92,4 +92,4 @@ Returns an error message (string) for the last call to jsmin().
 
 [Discovery Communications](http://discovery.com) developed a similar extension in-house for minifying bundled JavaScript.
 
-I decided to take the most recent source from [Douglas Crockford's JSMin](/douglascrockford/JSMin) and port / manage the extension for PECL.
+I decided to take the most recent source from [Douglas Crockford's JSMin](https://github.com/douglascrockford/JSMin) and port / manage the extension for PECL.
