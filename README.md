@@ -14,18 +14,34 @@ This extension currently works with all versions of PHP 5.3 and PHP 5.4. Support
 
 ## Installation
 
-To install, download the source and build as follows:
+### Via PECL
 
-```
-cd /path/to/source
-phpize
-./configure
-make install clean
+You can install this extension by using the ```pecl``` command:
+
+```bash
+pecl install jsmin-beta
 ```
 
-Then, move the built module to your extensions directory, and enable the extension in php.ini by adding:
+*Note*: Since this extension is currently in beta, you should provide the *-beta* suffix after the package name.
 
+### Via source
+
+To install via source, clone this repo and then run the following:
+
+```bash
+$ cd /path/to/source
+$ phpize
+$ ./configure
+$ make install clean
 ```
+
+Then, move the built module to your extensions directory.
+
+### Enable extension
+
+You will want to enable the extension in php.ini by adding:
+
+```text
 extension="jsmin.so"
 ```
 
@@ -53,7 +69,7 @@ echo jsmin($javascript);
 
 Example output is the following:
 
-```text
+```javascript
 var notes="jsmin is easy!";
 ```
 
