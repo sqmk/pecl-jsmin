@@ -35,11 +35,11 @@
    <file name="php_jsmin.h" role="src" />
    <file name="jsmin.c" role="src" />
    <file name="jsmin.h" role="src" />
-   <dir name="tests">
+   <dir name="tests" role="test" >
     <file name="call-multiple-times.phpt" role="test" />
     <file name="false-on-failure.phpt" role="test" />
-    <file name="issue-03-string-type-on-empty-arg.phpt" />
-    <file name="issue-07-no-unexpected-bytes-on-empty.phpt" />
+    <file name="issue-03-string-type-on-empty-arg.phpt" role="test" />
+    <file name="issue-07-no-unexpected-bytes-on-empty.phpt" role="test" />
     <file name="missing-argument.phpt" role="test" />
     <file name="strip-comments.phpt" role="test" />
     <file name="unterminated-comment.phpt" role="test" />
