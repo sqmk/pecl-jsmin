@@ -37,6 +37,14 @@ $ make install clean
 
 Then, move the built module to your extensions directory.
 
+### Via Homebrew (OSX)
+
+For those on OSX, you can use Homebrew to manage PHP versions. Included is the jsmin extension.
+
+Take a look at [Homebrew PHP](https://github.com/josegonzalez/homebrew-php) for installation notes.
+
+Thanks to [Jon Whitcraft](https://github.com/jwhitcraft/) for pushing the definition for jsmin to the project.
+
 ### Enable extension
 
 You will want to enable the extension in php.ini by adding:
