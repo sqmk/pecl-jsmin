@@ -24,10 +24,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#include "php.h"
-#include "php_ini.h"
-#include "ext/standard/info.h"
-
+#include <stdio.h>
 #include "jsmin.h"
 
 /* new_jsmin_obj -- sets up new struct for assisting in minification

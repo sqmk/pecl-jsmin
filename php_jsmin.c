@@ -23,6 +23,7 @@
 #endif
 
 #include "php.h"
+#include "ext/standard/info.h"
 #include "jsmin.h"
 #include "php_jsmin.h"
 
