@@ -24,7 +24,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#include <stdio.h>
+#include "php.h"
+#include "php_ini.h"
+#include "ext/standard/info.h"
+
 #include "jsmin.h"
 
 /* new_jsmin_obj -- sets up new struct for assisting in minification
@@ -35,7 +38,7 @@ new_jsmin_obj(char *javascript TSRMLS_DC)
 {
 	jsmin_obj *jmo  = ecalloc(1, sizeof(jsmin_obj));
 	jmo->javascript = javascript;
-	jmo->buffer     = (smart_str) {0};
+	memset(&jmo->buffer, 0, sizeof(smart_str));
 	jmo->theA       = '\n';
 	jmo->errorCode  = 0;
 
