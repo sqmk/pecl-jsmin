@@ -21,7 +21,8 @@
  </stability>
  <license filesource="LICENSE">PHP License</license>
  <notes>
-  - Initial release
+    - Version number fixes
+    - Windows fixes (thanks weltling)
  </notes>
  <contents>
   <dir name="/">
