@@ -35,7 +35,7 @@ new_jsmin_obj(char *javascript TSRMLS_DC)
 {
 	jsmin_obj *jmo  = ecalloc(1, sizeof(jsmin_obj));
 	jmo->javascript = javascript;
-	jmo->buffer     = (smart_str) {0};
+	memset(&jmo->buffer, 0, sizeof(smart_str));
 	jmo->theA       = '\n';
 	jmo->errorCode  = 0;
 
