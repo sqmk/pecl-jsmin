@@ -1,7 +1,6 @@
 language: c
 
 env:
-    - PHP_VERSION=5.3.10 PHP_OLDER_AUTOCONF=true
     - PHP_VERSION=5.3.28 PHP_OLDER_AUTOCONF=true
     - PHP_VERSION=5.4.25
     - PHP_VERSION=5.5.9
