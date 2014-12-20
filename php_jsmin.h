@@ -21,7 +21,7 @@
 #ifndef PHP_JSMIN_H
 #define PHP_JSMIN_H
 
-#define PHP_JSMIN_VERSION "0.1.1"
+#define PHP_JSMIN_VERSION "1.0.0"
 
 #ifdef PHP_WIN32
 #define PHP_JSMIN_API __declspec(dllexport)
@@ -52,12 +52,3 @@ PHP_FUNCTION(jsmin_last_error);
 PHP_FUNCTION(jsmin_last_error_msg);
 
 #endif  /* PHP_JSMIN_H */
-
-/*
- * Local variables:
- * tab-width: 4
- * c-basic-offset: 4
- * End:
- * vim600: noet sw=4 ts=4 fdm=marker
- * vim<600: noet sw=4 ts=4
- */
