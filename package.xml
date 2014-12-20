@@ -10,23 +10,21 @@
   <email>sqmk@php.net</email>
   <active>yes</active>
  </lead>
- <date>2013-09-14</date>
+ <date>2014-12-20</date>
  <version>
-  <release>0.1.1</release>
-  <api>0.1.1</api>
+  <release>1.0.0</release>
+  <api>1.0.0</api>
  </version>
  <stability>
-  <release>beta</release>
-  <api>beta</api>
+  <release>stable</release>
+  <api>stable</api>
  </stability>
  <license filesource="LICENSE">PHP License</license>
  <notes>
-    - Version number fixes
-    - Windows fixes (thanks weltling)
+    - Stable release
  </notes>
  <contents>
   <dir name="/">
-   <file name="EXPERIMENTAL" role="doc" />
    <file name="CREDITS" role="doc" />
    <file name="LICENSE" role="doc" />
    <file name="config.m4" role="src" />
@@ -35,17 +33,15 @@
    <file name="php_jsmin.h" role="src" />
    <file name="jsmin.c" role="src" />
    <file name="jsmin.h" role="src" />
-   <dir name="tests" role="test">
-    <file name="call-multiple-times.phpt" role="test" />
-    <file name="false-on-failure.phpt" role="test" />
-    <file name="issue-03-string-type-on-empty-arg.phpt" role="test" />
-    <file name="issue-07-no-unexpected-bytes-on-empty.phpt" role="test" />
-    <file name="missing-argument.phpt" role="test" />
-    <file name="strip-comments.phpt" role="test" />
-    <file name="unterminated-comment.phpt" role="test" />
-    <file name="unterminated-regex.phpt" role="test" />
-    <file name="unterminated-string.phpt" role="test" />
-   </dir>
+   <file name="tests/call-multiple-times.phpt" role="test" />
+   <file name="tests/false-on-failure.phpt" role="test" />
+   <file name="tests/issue-03-string-type-on-empty-arg.phpt" role="test" />
+   <file name="tests/issue-07-no-unexpected-bytes-on-empty.phpt" role="test" />
+   <file name="tests/missing-argument.phpt" role="test" />
+   <file name="tests/strip-comments.phpt" role="test" />
+   <file name="tests/unterminated-comment.phpt" role="test" />
+   <file name="tests/unterminated-regex.phpt" role="test" />
+   <file name="tests/unterminated-string.phpt" role="test" />
   </dir>
  </contents>
  <dependencies>
@@ -60,38 +56,4 @@
  </dependencies>
  <providesextension>jsmin</providesextension>
  <extsrcrelease />
- <changelog> 
-  <release> 
-   <date>2013-09-14</date> 
-   <version> 
-    <release>0.1.1</release> 
-    <api>0.1.1</api> 
-   </version> 
-   <stability> 
-    <release>beta</release> 
-    <api>beta</api> 
-   </stability>  
-   <notes>
-    - Version number fixes
-    - Windows fixes (thanks weltling)
-   </notes> 
-  </release> 
-  <release> 
-   <date>2013-07-26</date> 
-   <version> 
-    <release>0.1.0</release> 
-    <api>0.1.0</api> 
-   </version> 
-   <stability> 
-    <release>beta</release> 
-    <api>beta</api> 
-   </stability>  
-   <notes>
-    - Initial release
-   </notes> 
-  </release> 
- </changelog>
 </package>
-<!--
-vim:et:ts=1:sw=1
---> 
