@@ -10,7 +10,7 @@ http://www.crockford.com/javascript/jsmin.html
 
 ## Requirements
 
-This extension currently works with PHP 5.3.10+. Support for older verisons of PHP is not provided.
+This extension currently works with PHP 5.3.10+. Support for older versions of PHP is not provided.
 
 ## Installation
 
@@ -19,10 +19,8 @@ This extension currently works with PHP 5.3.10+. Support for older verisons of P
 You can install this extension by using the ```pecl``` command:
 
 ```bash
-pecl install jsmin-beta
+pecl install jsmin
 ```
-
-*Note*: Since this extension is currently in beta, you should provide the *-beta* suffix after the package name.
 
 ### Via source
 
