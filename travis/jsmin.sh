@@ -1,11 +1,5 @@
 #!/usr/bin/env sh
 
-if [ $PHP_OLDER_AUTOCONF ]
-then
-    sudo apt-get install autoconf2.59 
-    export PHP_AUTOCONF=`which autoconf2.59`
-fi
-
 # PHP Settings
 PHP_BASE="php-$PHP_VERSION"
 PHP_PACKAGE="php-$PHP_VERSION.tar.bz2"
