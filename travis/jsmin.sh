@@ -2,8 +2,8 @@
 
 # PHP Settings
 PHP_BASE="php-$PHP_VERSION"
-PHP_PACKAGE="php-$PHP_VERSION.tar.bz2"
-PHP_URL="http://us1.php.net/get/$PHP_PACKAGE/from/www.php.net/mirror"
+PHP_PACKAGE="php-$PHP_VERSION.tar.gz"
+PHP_URL="http://us1.php.net/get/$PHP_PACKAGE/from/this/mirror"
 
 # Move out of project 
 cd ../
