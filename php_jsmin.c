@@ -140,6 +140,7 @@ PHP_FUNCTION(jsmin_last_error_msg)
 		return;
 	}
 
+
 	switch (JSMIN_G(error_code)) {
 		case PHP_JSMIN_ERROR_UNTERMINATED_COMMENT:
 			RETURN_STRING("Unterminated comment", 1);
@@ -151,7 +152,7 @@ PHP_FUNCTION(jsmin_last_error_msg)
 			RETURN_STRING("Unterminated set in Regular Expression literal", 1);
 
 		default:
-			RETURN_STRING("No error", 0);
+			RETURN_STRING("No error", 1);
 	}
 }
 /* }}} */
