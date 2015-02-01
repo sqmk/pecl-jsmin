@@ -32,6 +32,7 @@ ZEND_DECLARE_MODULE_GLOBALS(jsmin)
 /* {{{ arginfo */
 ZEND_BEGIN_ARG_INFO_EX(arginfo_jsmin, 0, 0, 1)
 	ZEND_ARG_INFO(0, javascript)
+	ZEND_ARG_INFO(1, return_code)
 ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_INFO(arginfo_jsmin_last_error, 0)
@@ -102,20 +103,24 @@ PHP_FUNCTION(jsmin)
 	int javascript_len;
 	jsmin_obj *jmo;
 
-	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "s", &javascript, &javascript_len) == FAILURE) {
-		return;
+	zval *ret_code = NULL;
+
+	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "s|z/", &javascript, &javascript_len, &ret_code) == FAILURE) {
+		RETURN_FALSE;
 	}
 
 	jmo = jsmin(javascript TSRMLS_CC);
+	if (ret_code) {
+		zval_dtor(ret_code);
+		ZVAL_LONG(ret_code, jmo->errorCode);
+	}
 	JSMIN_G(error_code) = jmo->errorCode;
 
 	if (jmo->errorCode) {
-		JSMIN_G(error_code) = jmo->errorCode;
 		ZVAL_BOOL(return_value, 0);
 	} else {
 		ZVAL_STRINGL(return_value, jmo->buffer.c, jmo->buffer.len, 1);
 	}
-
 	free_jsmin_obj(jmo TSRMLS_CC);
 }
 /* }}} */
