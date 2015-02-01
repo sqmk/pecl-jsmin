@@ -25,7 +25,10 @@ SOFTWARE.
 */
 
 #include <stdio.h>
+#include "utf8.h"
 #include "jsmin.h"
+
+#define isutf(c) (((c)&0xC0)!=0x80)
 
 /* new_jsmin_obj -- sets up new struct for assisting in minification
 */
@@ -33,11 +36,11 @@ SOFTWARE.
 static jsmin_obj*
 new_jsmin_obj(char *javascript TSRMLS_DC)
 {
-	jsmin_obj *jmo  = ecalloc(1, sizeof(jsmin_obj));
+	jsmin_obj *jmo	= ecalloc(1, sizeof(jsmin_obj));
 	jmo->javascript = javascript;
 	memset(&jmo->buffer, 0, sizeof(smart_str));
-	jmo->theA       = '\n';
-	jmo->errorCode  = 0;
+	jmo->theA		= '\n';
+	jmo->errorCode	= 0;
 
 	return jmo;
 }
@@ -63,7 +66,6 @@ jsmin_isAlphanum(int c)
 		c > 126);
 }
 
-
 /* jsmin_get -- return the next character from stdin. Watch out for lookahead. If
 		the character is a control character, translate it to a space or
 		linefeed.
@@ -75,7 +77,10 @@ jsmin_get(jsmin_obj *jmo)
 	int c = jmo->theLookahead;
 	jmo->theLookahead = 0;
 	if (c == 0) {
-		c = *(jmo->javascript++);
+		int byte_len = 0;
+		c = u8_nextchar(jmo->javascript, &byte_len);
+		jmo->javascript += byte_len;
+		jmo->byte_len = byte_len;
 	}
 	if (c >= ' ' || c == '\n' || c == 0) {
 		return c;
@@ -83,11 +88,14 @@ jsmin_get(jsmin_obj *jmo)
 	if (c == '\r') {
 		return '\n';
 	}
+	if (isutf(c)) {
+		return c;
+	}
 	return ' ';
 }
 
 
-/* jsmin_peek -- get the next character without getting it.
+/** jsmin_peek -- get the next character without getting it.
 */
 
 static int
@@ -166,7 +174,9 @@ jsmin_action(int d, jsmin_obj *jmo)
 		jmo->theA = jmo->theB;
 		if (jmo->theA == '\'' || jmo->theA == '"' || jmo->theA == '`') {
 			for (;;) {
-				smart_str_appendc(&jmo->buffer, jmo->theA);
+				char wc_bytes[4];
+				int bytes = u8_wc_toutf8(wc_bytes, jmo->theA);
+				smart_str_appendl_ex(&jmo->buffer, wc_bytes, bytes, 0);
 				jmo->theA = jsmin_get(jmo);
 				if (jmo->theA == jmo->theB) {
 					break;
@@ -191,7 +201,7 @@ jsmin_action(int d, jsmin_obj *jmo)
 							jmo->theA == '\n')) {
 			smart_str_appendc(&jmo->buffer, jmo->theA);
 			if (jmo->theA == '/' || jmo->theA == '*') {
-			    smart_str_appendc(&jmo->buffer, ' ');
+				smart_str_appendc(&jmo->buffer, ' ');
 			}
 			smart_str_appendc(&jmo->buffer, jmo->theB);
 			for (;;) {
