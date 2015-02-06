@@ -79,6 +79,12 @@ Example output is the following:
 var notes="jsmin is easy!";
 ```
 
+You can also retrieve the latest error by passing by reference to the second argument:
+
+```php
+jsmin($javascript, $error);
+```
+
 ### Function: jsmin_last_error
 
 Returns error code of last call to jsmin().
