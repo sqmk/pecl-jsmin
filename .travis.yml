@@ -9,3 +9,5 @@ script: ./travis/jsmin.sh
 
 notifications:
     email: false
+
+sudo: false
