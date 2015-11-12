@@ -1,6 +1,6 @@
 # jsmin - PHP extension for JavaScript minification
 
-Master: [![Build Status](https://secure.travis-ci.org/sqmk/pecl-jsmin.png)](http://travis-ci.org/sqmk/pecl-jsmin)
+[![Build Status](https://api.travis-ci.org/sqmk/pecl-jsmin.svg?branch=master)](https://travis-ci.org/sqmk/pecl-jsmin)
 
 ## Introduction
 
