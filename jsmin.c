@@ -44,8 +44,7 @@ new_jsmin_obj(char *javascript TSRMLS_DC)
 
 /* free_jsmin_obj -- frees up memory on struct
 */
-
-void*
+void
 free_jsmin_obj(jsmin_obj *jmo TSRMLS_DC)
 {
 	smart_str_free(&jmo->buffer);

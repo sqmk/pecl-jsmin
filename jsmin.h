@@ -25,6 +25,6 @@ enum error_codes {
 };
 
 extern jsmin_obj* jsmin(char *javascript TSRMLS_DC);
-extern void* free_jsmin_obj(jsmin_obj *jmo TSRMLS_DC);
+extern void free_jsmin_obj(jsmin_obj *jmo TSRMLS_DC);
 
 #endif
