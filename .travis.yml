@@ -1,9 +1,8 @@
 language: c
 
 env:
-    - PHP_VERSION=5.4.36
-    - PHP_VERSION=5.5.20
-    - PHP_VERSION=5.6.4
+    - PHP_VERSION=5.5.30
+    - PHP_VERSION=5.6.15
 
 script: ./travis/jsmin.sh
 
