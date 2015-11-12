@@ -8,6 +8,7 @@
 
 typedef struct {
 	char *javascript;
+	int   byte_len;
 	smart_str buffer;
 	int theA;
 	int theB;
@@ -18,13 +19,13 @@ typedef struct {
 } jsmin_obj;
 
 enum error_codes {
-	PHP_JSMIN_ERROR_NONE = 0,
-	PHP_JSMIN_ERROR_UNTERMINATED_COMMENT,
-	PHP_JSMIN_ERROR_UNTERMINATED_STRING,
-	PHP_JSMIN_ERROR_UNTERMINATED_REGEX
+    PHP_JSMIN_ERROR_NONE = 0,
+    PHP_JSMIN_ERROR_UNTERMINATED_COMMENT,
+    PHP_JSMIN_ERROR_UNTERMINATED_STRING,
+    PHP_JSMIN_ERROR_UNTERMINATED_REGEX
 };
 
 extern jsmin_obj* jsmin(char *javascript TSRMLS_DC);
-extern void* free_jsmin_obj(jsmin_obj *jmo TSRMLS_DC);
+extern void free_jsmin_obj(jsmin_obj *jmo TSRMLS_DC);
 
 #endif
