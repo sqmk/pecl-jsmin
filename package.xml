@@ -10,10 +10,10 @@
   <email>sqmk@php.net</email>
   <active>yes</active>
  </lead>
- <date>2015-02-06</date>
+ <date>2015-11-12</date>
  <version>
-  <release>1.1.0</release>
-  <api>1.1.0</api>
+  <release>2.0.0</release>
+  <api>2.0.0</api>
  </version>
  <stability>
   <release>stable</release>
@@ -21,19 +21,21 @@
  </stability>
  <license filesource="LICENSE">PHP License</license>
  <notes>
-    - Add second argument to jsmin to return error code (thanks c9s)
-    - Bug fixes (thanks c9s)
+    - UTF-8 support (@c9s)
  </notes>
  <contents>
   <dir name="/">
    <file name="CREDITS" role="doc" />
    <file name="LICENSE" role="doc" />
+   <file name="README.md" role="doc" />
    <file name="config.m4" role="src" />
    <file name="config.w32" role="src" />
    <file name="php_jsmin.c" role="src" />
    <file name="php_jsmin.h" role="src" />
    <file name="jsmin.c" role="src" />
    <file name="jsmin.h" role="src" />
+   <file name="utf8.c" role="src" />
+   <file name="utf8.h" role="src" />
    <file name="tests/99-compress-jquery.phpt" role="test" />
    <file name="tests/call-multiple-times.phpt" role="test" />
    <file name="tests/false-on-failure.phpt" role="test" />
@@ -44,12 +46,14 @@
    <file name="tests/unterminated-comment.phpt" role="test" />
    <file name="tests/unterminated-regex.phpt" role="test" />
    <file name="tests/unterminated-string.phpt" role="test" />
+   <file name="tests/utf8_comment.phpt" role="test" />
+   <file name="tests/utf8_string.phpt" role="test" />
   </dir>
  </contents>
  <dependencies>
   <required>
    <php>
-    <min>5.3.10</min>
+    <min>5.5.0</min>
    </php>
    <pearinstaller>
     <min>1.4.3</min>
