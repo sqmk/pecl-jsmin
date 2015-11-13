@@ -22,6 +22,12 @@
 #include <alloca.h>
 #endif
 
+#ifdef WIN32
+# ifndef snprintf
+#  define snprintf _snprintf
+# endif
+#endif
+
 #include "utf8.h"
 
 static const uint32_t offsetsFromUTF8[6] = {
