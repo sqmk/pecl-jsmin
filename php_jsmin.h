@@ -21,7 +21,7 @@
 #ifndef PHP_JSMIN_H
 #define PHP_JSMIN_H
 
-#define PHP_JSMIN_VERSION "2.0.0"
+#define PHP_JSMIN_VERSION "2.0.1"
 
 #ifdef PHP_WIN32
 #define PHP_JSMIN_API __declspec(dllexport)
