@@ -38,7 +38,7 @@ new_jsmin_obj(char *javascript TSRMLS_DC)
 {
 	jsmin_obj *jmo	= ecalloc(1, sizeof(jsmin_obj));
 	jmo->javascript = javascript;
-	memset(&jmo->buffer, 0, sizeof(smart_str));
+	memset(&jmo->buffer, 0, sizeof(smart_string));
 	jmo->theA		= '\n';
 	jmo->errorCode	= 0;
 
@@ -50,7 +50,7 @@ new_jsmin_obj(char *javascript TSRMLS_DC)
 void
 free_jsmin_obj(jsmin_obj *jmo TSRMLS_DC)
 {
-	smart_str_free(&jmo->buffer);
+	smart_string_free(&jmo->buffer);
 	efree(jmo);
 }
 
@@ -162,13 +162,13 @@ jsmin_action(int d, jsmin_obj *jmo)
 {
 	switch (d) {
 	case 1:
-		smart_str_appendc(&jmo->buffer, jmo->theA);
+		smart_string_appendc(&jmo->buffer, jmo->theA);
 		if (
 			(jmo->theY == '\n' || jmo->theY == ' ') &&
 			(jmo->theA == '+' || jmo->theA == '-' || jmo->theA == '*' || jmo->theA == '/') &&
 			(jmo->theB == '+' || jmo->theB == '-' || jmo->theB == '*' || jmo->theB == '/')
 		) {
-			smart_str_appendc(&jmo->buffer, jmo->theY);
+			smart_string_appendc(&jmo->buffer, jmo->theY);
 		}
 	case 2:
 		jmo->theA = jmo->theB;
@@ -176,13 +176,13 @@ jsmin_action(int d, jsmin_obj *jmo)
 			for (;;) {
 				char wc_bytes[4];
 				int bytes = u8_wc_toutf8(wc_bytes, jmo->theA);
-				smart_str_appendl_ex(&jmo->buffer, wc_bytes, bytes, 0);
+				smart_string_appendl_ex(&jmo->buffer, wc_bytes, bytes, 0);
 				jmo->theA = jsmin_get(jmo);
 				if (jmo->theA == jmo->theB) {
 					break;
 				}
 				if (jmo->theA == '\\') {
-					smart_str_appendc(&jmo->buffer, jmo->theA);
+					smart_string_appendc(&jmo->buffer, jmo->theA);
 					jmo->theA = jsmin_get(jmo);
 				}
 				if (jmo->theA == 0) {
@@ -199,22 +199,22 @@ jsmin_action(int d, jsmin_obj *jmo)
 							jmo->theA == '+' || jmo->theA == '-' || jmo->theA == '~' ||
 							jmo->theA == '*' || jmo->theA == '/' || jmo->theA == '{' || 
 							jmo->theA == '\n')) {
-			smart_str_appendc(&jmo->buffer, jmo->theA);
+			smart_string_appendc(&jmo->buffer, jmo->theA);
 			if (jmo->theA == '/' || jmo->theA == '*') {
-				smart_str_appendc(&jmo->buffer, ' ');
+				smart_string_appendc(&jmo->buffer, ' ');
 			}
-			smart_str_appendc(&jmo->buffer, jmo->theB);
+			smart_string_appendc(&jmo->buffer, jmo->theB);
 			for (;;) {
 				jmo->theA = jsmin_get(jmo);
 				if (jmo->theA == '[') {
 					for (;;) {
-						smart_str_appendc(&jmo->buffer, jmo->theA);
+						smart_string_appendc(&jmo->buffer, jmo->theA);
 						jmo->theA = jsmin_get(jmo);
 						if (jmo->theA == ']') {
 							break;
 						}
 						if (jmo->theA == '\\') {
-							smart_str_appendc(&jmo->buffer, jmo->theA);
+							smart_string_appendc(&jmo->buffer, jmo->theA);
 							jmo->theA = jsmin_get(jmo);
 						}
 						if (jmo->theA == 0) {
@@ -231,14 +231,14 @@ jsmin_action(int d, jsmin_obj *jmo)
 					}
 					break;
 				} else if (jmo->theA =='\\') {
-					smart_str_appendc(&jmo->buffer, jmo->theA);
+					smart_string_appendc(&jmo->buffer, jmo->theA);
 					jmo->theA = jsmin_get(jmo);
 				}
 				if (jmo->theA == 0) {
 					jmo->errorCode = PHP_JSMIN_ERROR_UNTERMINATED_REGEX;
 					return;
 				}
-				smart_str_appendc(&jmo->buffer, jmo->theA);
+				smart_string_appendc(&jmo->buffer, jmo->theA);
 			}
 			jmo->theB = jsmin_next(jmo);
 		}
