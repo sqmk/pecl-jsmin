@@ -119,7 +119,7 @@ PHP_FUNCTION(jsmin)
 	if (jmo->errorCode) {
 		ZVAL_BOOL(return_value, 0);
 	} else {
-		ZVAL_STRINGL(return_value, jmo->buffer.c, jmo->buffer.len, 1);
+		ZVAL_STRINGL(return_value, jmo->buffer.c, jmo->buffer.len);
 	}
 	free_jsmin_obj(jmo TSRMLS_CC);
 }
@@ -148,16 +148,16 @@ PHP_FUNCTION(jsmin_last_error_msg)
 
 	switch (JSMIN_G(error_code)) {
 		case PHP_JSMIN_ERROR_UNTERMINATED_COMMENT:
-			RETURN_STRING("Unterminated comment", 1);
+			RETURN_STRING("Unterminated comment");
 
 		case PHP_JSMIN_ERROR_UNTERMINATED_STRING:
-			RETURN_STRING("Unterminated string literal", 1);
+			RETURN_STRING("Unterminated string literal");
 
 		case PHP_JSMIN_ERROR_UNTERMINATED_REGEX:
-			RETURN_STRING("Unterminated set in Regular Expression literal", 1);
+			RETURN_STRING("Unterminated set in Regular Expression literal");
 
 		default:
-			RETURN_STRING("No error", 1);
+			RETURN_STRING("No error");
 	}
 }
 /* }}} */

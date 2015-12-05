@@ -4,12 +4,12 @@
 #define JSMIN_H
 
 #include "php.h"
-#include "ext/standard/php_smart_str.h"
+#include "ext/standard/php_smart_string.h"
 
 typedef struct {
 	char *javascript;
 	int   byte_len;
-	smart_str buffer;
+	smart_string buffer;
 	int theA;
 	int theB;
 	int theLookahead;
