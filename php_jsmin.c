@@ -100,7 +100,7 @@ ZEND_GET_MODULE(jsmin)
 PHP_FUNCTION(jsmin)
 {
 	char *javascript;
-	int javascript_len;
+	size_t javascript_len;
 	jsmin_obj *jmo;
 
 	zval *ret_code = NULL;
