@@ -88,9 +88,6 @@ jsmin_get(jsmin_obj *jmo)
 	if (c == '\r') {
 		return '\n';
 	}
-	if (isutf(c)) {
-		return c;
-	}
 	return ' ';
 }
 
