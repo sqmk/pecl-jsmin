@@ -12,6 +12,8 @@ http://www.crockford.com/javascript/jsmin.html
 
 This extension currently works with PHP 5.3.10+. Support for older versions of PHP is not provided.
 
+The feature/php7 branch has been updated to compile successfully on FreeBSD under PHP 7, see [Rafal Lukawiecki's fork.](https://github.com/RafalLukawiecki/pecl-jsmin), which resolves [Issue #51](https://github.com/sqmk/pecl-jsmin/issues/51).
+
 ## Installation
 
 ### Via PECL
