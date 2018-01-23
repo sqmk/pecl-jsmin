@@ -10,7 +10,7 @@
   <email>sqmk@php.net</email>
   <active>yes</active>
  </lead>
- <date>2015-11-13</date>
+ <date>2018-01-23</date>
  <version>
   <release>3.0.0</release>
   <api>3.0.0</api>
@@ -21,7 +21,8 @@
  </stability>
  <license filesource="LICENSE">PHP License</license>
  <notes>
-    - MSVC support (@Jan-E)
+    - PHP 7 support (@RafalLukawiecki)
+    - PHP 7 support (Ali Nikkhah)
  </notes>
  <contents>
   <dir name="/">

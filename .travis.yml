@@ -1,7 +1,9 @@
 language: c
 
 env:
-    - PHP_VERSION=7.0.0
+    - PHP_VERSION=7.0.27
+    - PHP_VERSION=7.1.13
+    - PHP_VERSION=7.2.1
 
 script: ./travis/jsmin.sh
 
