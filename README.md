@@ -10,7 +10,7 @@ http://www.crockford.com/javascript/jsmin.html
 
 ## Requirements
 
-This extension currently works with PHP 5.3.10+. Support for older versions of PHP is not provided.
+This extension currently works with PHP 7.0.0+. Use versions < 3.0 for PHP 5.X support.
 
 ## Installation
 
