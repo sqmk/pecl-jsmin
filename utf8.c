@@ -19,7 +19,9 @@
 #ifdef WIN32
 #include <malloc.h>
 #else
+#ifndef __FreeBSD__
 #include <alloca.h>
+#endif
 #endif
 
 #ifdef WIN32
