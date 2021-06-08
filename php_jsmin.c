@@ -105,11 +105,11 @@ PHP_FUNCTION(jsmin)
 
 	zval *ret_code = NULL;
 
-	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "s|z/", &javascript, &javascript_len, &ret_code) == FAILURE) {
+	if (zend_parse_parameters(ZEND_NUM_ARGS(), "s|z/", &javascript, &javascript_len, &ret_code) == FAILURE) {
 		RETURN_FALSE;
 	}
 
-	jmo = jsmin(javascript TSRMLS_CC);
+	jmo = jsmin(javascript);
 	if (ret_code) {
 		zval_dtor(ret_code);
 		ZVAL_LONG(ret_code, jmo->errorCode);
@@ -121,7 +121,7 @@ PHP_FUNCTION(jsmin)
 	} else {
 		ZVAL_STRINGL(return_value, jmo->buffer.c, jmo->buffer.len);
 	}
-	free_jsmin_obj(jmo TSRMLS_CC);
+	free_jsmin_obj(jmo);
 }
 /* }}} */
 
