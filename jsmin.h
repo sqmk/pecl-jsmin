@@ -25,7 +25,7 @@ enum error_codes {
   PHP_JSMIN_ERROR_UNTERMINATED_REGEX
 };
 
-extern jsmin_obj* jsmin(char *javascript TSRMLS_DC);
-extern void free_jsmin_obj(jsmin_obj *jmo TSRMLS_DC);
+extern jsmin_obj* jsmin(char *javascript);
+extern void free_jsmin_obj(jsmin_obj *jmo);
 
 #endif
