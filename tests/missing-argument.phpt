@@ -1,5 +1,9 @@
 --TEST--
 Missing argument throws warning
+--SKIPIF--
+<?php
+if (PHP_VERSION_ID >= 80000) die('skip Only for PHP < 8.0');
+?>
 --FILE--
 <?php
 

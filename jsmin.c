@@ -34,7 +34,7 @@ SOFTWARE.
 */
 
 static jsmin_obj*
-new_jsmin_obj(char *javascript TSRMLS_DC)
+new_jsmin_obj(char *javascript)
 {
 	jsmin_obj *jmo	= ecalloc(1, sizeof(jsmin_obj));
 	jmo->javascript = javascript;
@@ -48,7 +48,7 @@ new_jsmin_obj(char *javascript TSRMLS_DC)
 /* free_jsmin_obj -- frees up memory on struct
 */
 void
-free_jsmin_obj(jsmin_obj *jmo TSRMLS_DC)
+free_jsmin_obj(jsmin_obj *jmo)
 {
 	smart_string_free(&jmo->buffer);
 	efree(jmo);
@@ -250,9 +250,9 @@ jsmin_action(int d, jsmin_obj *jmo)
 */
 
 jsmin_obj*
-jsmin(char *javascript TSRMLS_DC)
+jsmin(char *javascript)
 {
-	jsmin_obj *jmo = new_jsmin_obj(javascript TSRMLS_CC);
+	jsmin_obj *jmo = new_jsmin_obj(javascript);
 
 	jsmin_action(3, jmo);
 	while (jmo->theA != 0) {
